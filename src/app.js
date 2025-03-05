@@ -1,18 +1,23 @@
 const express = require("express");
 const app = express();
 
-app.get("/user", (req, res) => {
-  res.send("This handles the GET request for /user");
+app.use("/admin", (req, res,next) => {
+  //middleware
+  const token="xyz";
+  const isAuthicated= token==="xyz";
+  if(!isAuthicated){
+    res.status(401).send("Not Authenticated");
+  }else{
+    next();
+  }
 });
-app.post("/user", (req, res) => {
-  res.send("This handles the POST request for /user");
+app.get("/admin/data", (req, res) => {
+  res.send("Data Sent Successfully");
 });
-app.use("/hello/2", (req, res) => {
-  res.send("Hello");
+app.get("/admin/del", (req, res) => {
+  res.send("User data deleted successfully");
 });
-app.use("/hello", (req, res) => {
-  res.send("Testing Phase....");
-});
+
 
 app.use("/", (req, res) => {
   res.send("Hello from  server");
