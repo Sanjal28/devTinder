@@ -2,11 +2,17 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 // middleware to convert json data to js object
 app.use(express.json());
 // middleware to read cookies
 app.use(cookieParser());
+// middleware to enable cross-origin resource sharing
+app.use(cors({
+  origin: "http://localhost:5173",//frontend url
+  credentials: true,
+}));
 
 // routes
 const authRouter = require("./routes/authentication");
